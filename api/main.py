@@ -45,3 +45,21 @@ def provision_s3(req: S3ProvisionRequest):
         "requestId": request_id,
         "status": "PENDING"
     }
+    
+@app.get("/status/{request_id}")
+def get_status(request_id: str):
+
+    response = table.get_item(
+        Key={
+            "requestId": request_id
+        }
+    )
+
+    item = response.get("Item")
+
+    if not item:
+        return {
+            "error": "Request not found"
+        }
+
+    return item
