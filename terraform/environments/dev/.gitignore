@@ -2,3 +2,5 @@
 *.tfstate
 *.tfstate.*
 terraform.tfvars
+
+IPD_S3_indus.md
