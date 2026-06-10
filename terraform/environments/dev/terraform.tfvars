@@ -1,1 +1,0 @@
-bucket_name="iso-00000000000"

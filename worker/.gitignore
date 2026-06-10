@@ -1,7 +1,9 @@
 # Python
 .venv/
 venv/
+__pycache__/
 
 # Environment variables
 .env
 .env.*
+worker.txt
