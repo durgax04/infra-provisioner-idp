@@ -1,16 +1,17 @@
 import json
 import time
+import os
 
 from services.dynamodb import update_status
 from services.terraform import (
     generate_tfvars,
-    run_terraform
+    run_terraform,
+    terraform_init
 )
 from services.sqs import (
     receive_messages,
     delete_message
 )
-
 
 def process_message(message):
     body = json.loads(
@@ -18,7 +19,7 @@ def process_message(message):
     )
 
     request_id = body["requestId"]
-    bucket_name = body["bucketName"]
+    # bucket_name = body["bucketName"]
 
     print("=" * 50)
     print("Received")
@@ -30,20 +31,15 @@ def process_message(message):
             "PROCESSING"
         )
 
-        generate_tfvars(
-            bucket_name
-        )
+        # tfvars_file =  generate_tfvars(body)
 
-        result = run_terraform()
+        result = tfapply(body)  
 
         if result.returncode == 0:
+            
             update_status(
                 request_id,
                 "COMPLETED"
-            )
-
-            delete_message(
-                message["ReceiptHandle"]
             )
 
             print(
@@ -60,7 +56,6 @@ def process_message(message):
             print(
                 "Terraform apply failed"
             )
-
     except Exception as e:
         update_status(
             request_id,
@@ -72,9 +67,29 @@ def process_message(message):
             "Worker Error:",
             str(e)
         )
+    finally:
+        delete_message(
+            message["ReceiptHandle"]
+        )
+
+def tfapply(payload):
+    tfvars_file = generate_tfvars(payload)
+
+    try:
+        return run_terraform(tfvars_file)
+
+    finally:
+        if os.path.exists(tfvars_file):
+            os.remove(tfvars_file)
 
 
 def main():
+    init_result = terraform_init()
+
+    if init_result.returncode != 0:
+        raise Exception(init_result.stderr)
+
+    print("Terraform initialized")
     while True:
         messages = receive_messages()
 
