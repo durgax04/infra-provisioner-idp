@@ -13,23 +13,11 @@ Each provisioning request follows a simple lifecycle:
 
 ---
 
-![Architecture Flow](../images/image.png)
+![Architecture Flow](../images/flow.png)
 
 ---
 
-## Success Path
-
-When Terraform completes successfully:
-
-```text
-Receive Message
-      ↓
-Terraform Apply
-      ↓
-Update Status = PROVISIONED
-      ↓
-Delete Message
-```
+![Success Path](../images/success_path.png)
 
 ### Steps
 
@@ -37,26 +25,12 @@ Delete Message
 2. Required Terraform variables are generated.
 3. Terraform initialization (`terraform init`) is executed.
 4. Terraform apply (`terraform apply`) creates the infrastructure.
-5. DynamoDB status is updated to `PROVISIONED`.
+5. DynamoDB status is updated to `COMPLETED`.
 6. Processed message is removed from the SQS queue.
 
 ---
 
-## Failure Path
-
-When Terraform execution fails:
-
-```text
-Receive Message
-      ↓
-Terraform Apply
-      ↓
-Terraform Failure
-      ↓
-Update Status = FAILED
-      ↓
-Delete Message
-```
+![Failure Path](../images/failure_path.png)
 
 ### Steps
 
@@ -128,26 +102,3 @@ Example statuses:
 * API response times are not impacted by Terraform execution.
 * Worker can be horizontally scaled to process multiple requests concurrently.
 
----
-
-## End-to-End Workflow
-
-```text
-User Request
-      ↓
-API Service
-      ↓
-Create Request Record (DynamoDB)
-      ↓
-Send Message (SQS)
-      ↓
-Worker Polls Queue
-      ↓
-Terraform Provisioning
-      ↓
-Update Status
-      ↓
-Delete SQS Message
-      ↓
-Provisioning Complete
-```

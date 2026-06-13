@@ -177,27 +177,9 @@ Using a shared state file can lead to:
 
 ## Example Timeline
 
-```text
-Request #1
-    ↓
-Create Bucket A
-    ↓
-State:
-aws_s3_bucket.this = Bucket A
+![Request 1](../images/request-a.png)
 
-Request #2
-    ↓
-Desired:
-aws_s3_bucket.this = Bucket B
-    ↓
-Terraform Plan
-    ↓
-Destroy Bucket A
-Create Bucket B
-    ↓
-State:
-aws_s3_bucket.this = Bucket B
-```
+![Request 2](../images/request-b.png)
 
 ---
 

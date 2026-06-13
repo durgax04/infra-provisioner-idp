@@ -183,53 +183,12 @@ Delete Resource
 * Approval may be required
 * Depends on organizational policy
 
-
-## Production Environment
-
-```text
-Delete Resource
-      ↓
-Manager Approval
-      ↓
-Security Approval
-      ↓
-Terraform Destroy
-```
-
-Production environments follow stricter controls because infrastructure failures can impact customers and business operations.
-
 ---
 
-# Gist
-
-```text
-User Requests Deletion
-          ↓
-PENDING_APPROVAL
-          ↓
-Manager Approval
-          ↓
-SQS Message
-          ↓
-Worker Consumes Message
-          ↓
-Terraform Destroy
-          ↓
-Resource Deleted
-```
+![Delete Resources](../images/delete_resources.png)
 
 For critical environments, organizations often add:
 
-```text
-User Requests Deletion
-          ↓
-PENDING_DELETION (7 Days)
-          ↓
-Restore Possible
-          ↓
-Retention Period Expires
-          ↓
-Terraform Destroy
-```
+![Delete Resources Retention Period](../images/delete_resource_retention_period.png)
 
 This approach significantly reduces the risk of accidental infrastructure deletion.
