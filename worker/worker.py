@@ -19,7 +19,7 @@ def process_message(message):
     )
 
     request_id = body["requestId"]
-    # bucket_name = body["bucketName"]
+    state_key = body["stateKey"]
 
     print("=" * 50)
     print("Received")
@@ -31,8 +31,15 @@ def process_message(message):
             "PROCESSING"
         )
 
-        # tfvars_file =  generate_tfvars(body)
+        init_result = terraform_init(
+            state_key
+        )
 
+        if init_result.returncode != 0:
+            raise Exception(
+                init_result.stderr
+            )
+        print("Terraform initialized")
         result = tfapply(body)  
 
         if result.returncode == 0:
@@ -43,7 +50,7 @@ def process_message(message):
             )
 
             print(
-                "Terraform apply succeeded"
+                "Terraform apply succeeded."
             )
 
         else:
@@ -54,7 +61,7 @@ def process_message(message):
             )
 
             print(
-                "Terraform apply failed"
+                "Terraform apply failed."
             )
     except Exception as e:
         update_status(
@@ -84,12 +91,9 @@ def tfapply(payload):
 
 
 def main():
-    init_result = terraform_init()
 
-    if init_result.returncode != 0:
-        raise Exception(init_result.stderr)
+    print("Worker started...")
 
-    print("Terraform initialized")
     while True:
         messages = receive_messages()
 

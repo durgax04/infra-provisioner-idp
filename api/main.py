@@ -35,6 +35,7 @@ table = dynamodb.Table("ProvisionRequests")
 @app.post("/provision/s3")
 def provision_s3(req: S3ProvisionRequest):
     request_id = str(uuid.uuid4())
+    state_key = f"states/{request_id}.tfstate"
     
     if (
         req.bucket_type == "private"
@@ -48,26 +49,28 @@ def provision_s3(req: S3ProvisionRequest):
     
     table.put_item(
         Item = {
-            "requestId": request_id,
-            "status": "PENDING",
-            "bucketName": req.bucket_name,
-            "versioning": req.versioning,
-            "corsEnabled": req.cors_enabled,
-            "allowedOrigins": req.allowed_origins,
-            "bucketType": req.bucket_type,
-            "createdAt": int(time.time())
+            "requestId"      : request_id,
+            "stateKey"       : state_key,
+            "status"         : "PENDING",
+            "bucketName"     : req.bucket_name,
+            "versioning"     : req.versioning,
+            "corsEnabled"    : req.cors_enabled,
+            "allowedOrigins" : req.allowed_origins,
+            "bucketType"     : req.bucket_type,
+            "createdAt"      : int(time.time())
         }
     )
     
     sqs.send_message(
         QueueUrl = QUEUE_URL,
         MessageBody=json.dumps({
-            "requestId": request_id,
-            "bucketName": req.bucket_name,
-            "versioning": req.versioning,
-            "corsEnabled": req.cors_enabled,
+            "requestId"     : request_id,
+            "stateKey"      : state_key,
+            "bucketName"    : req.bucket_name,
+            "versioning"    : req.versioning,
+            "corsEnabled"   : req.cors_enabled,
             "allowedOrigins": req.allowed_origins,
-            "bucketType": req.bucket_type
+            "bucketType"    : req.bucket_type
         })
     )
     

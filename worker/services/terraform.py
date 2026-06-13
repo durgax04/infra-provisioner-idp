@@ -5,12 +5,15 @@ from .s3 import build_tfvars
 TERRAFORM_DIR = "./terraform/environments/dev"
 
 # print(TERRAFORM_DIR)
-def terraform_init():
+def terraform_init(state_key):
     return subprocess.run(
         [
             "terraform",
             "init",
-            "-reconfigure"
+            "-reconfigure",
+            "-backend-config=bucket=terraform-state-idp-1",
+            f"-backend-config=key={state_key}",
+            "-backend-config=region=us-east-2"
         ],
         cwd=TERRAFORM_DIR,
         capture_output=True,
