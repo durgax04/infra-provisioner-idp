@@ -12,11 +12,12 @@ Each provisioning request follows a simple lifecycle:
 4. Remove the processed message from the queue.
 
 ---
-
+## Architecture Flow
 ![Architecture Flow](../images/flow.png)
 
 ---
 
+## Success Path
 ![Success Path](../images/success_path.png)
 
 ### Steps
@@ -29,7 +30,7 @@ Each provisioning request follows a simple lifecycle:
 6. Processed message is removed from the SQS queue.
 
 ---
-
+## Failure Path
 ![Failure Path](../images/failure_path.png)
 
 ### Steps

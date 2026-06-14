@@ -177,8 +177,10 @@ Using a shared state file can lead to:
 
 ## Example Timeline
 
+### Request 1
 ![Request 1](../images/request-a.png)
 
+### Request 2
 ![Request 2](../images/request-b.png)
 
 ---

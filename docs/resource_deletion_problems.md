@@ -184,11 +184,12 @@ Delete Resource
 * Depends on organizational policy
 
 ---
-
+### Delete Resources
 ![Delete Resources](../images/delete_resources.png)
 
 For critical environments, organizations often add:
 
+### Delete Resources Retention Period
 ![Delete Resources Retention Period](../images/delete_resource_retention_period.png)
 
 This approach significantly reduces the risk of accidental infrastructure deletion.

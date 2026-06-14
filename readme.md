@@ -81,6 +81,7 @@ The API currently exposes endpoints for:
 * Health checks
 
 ---
+### Flow
 
 ![Flow](./images/flow.png)
 
