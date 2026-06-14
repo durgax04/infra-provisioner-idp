@@ -1,0 +1,13 @@
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+
+# Node / Frontend
+**/node_modules/
+**/.next/
+
+# Python
+**/venv/
+**/__pycache__/
+*.pyc

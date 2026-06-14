@@ -82,7 +82,7 @@ The API currently exposes endpoints for:
 
 ---
 
-![Flow](./images/image.png)
+![Flow](./images/flow.png)
 
 ---
 
