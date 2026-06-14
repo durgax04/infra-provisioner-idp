@@ -24,7 +24,7 @@ This process does not scale well.
 This project explores a self-service approach where infrastructure requests are submitted through an API and processed asynchronously by worker services.
 
 ---
-
+## Architecture
 ![Architecture](./images/architecture.png)
 ---
 
