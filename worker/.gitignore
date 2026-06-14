@@ -5,5 +5,4 @@ __pycache__/
 
 # Environment variables
 .env
-.env.*
 worker.txt
