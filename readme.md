@@ -137,3 +137,8 @@ Building this project helped me understand:
 * AWS service integration using Boto3
 * Designing platform engineering workflows
 
+---
+
+## Demo video
+
+![Demo video](./images/video.mp4)
