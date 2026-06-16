@@ -142,3 +142,7 @@ Building this project helped me understand:
 ## Demo video
 
 ![Demo video](./images/video.mp4)
+
+## License
+
+Copyright © 2026 durgax04. All rights reserved. 
