@@ -86,7 +86,7 @@ Each workspace maintains its own state, preventing conflicts between users.
 
 ---
 
-## Option 2: Separate State Files (Recommended)
+## Option 2: Separate State Files (I did this)
 
 Store infrastructure state in different backend keys.
 
@@ -114,9 +114,9 @@ terraform {
 When provisioning:
 
 ```text
-bucket-a → states/bucket-a.tfstate
-bucket-b → states/bucket-b.tfstate
-bucket-c → states/bucket-c.tfstate
+bucket-a -> states/bucket-a.tfstate
+bucket-b -> states/bucket-b.tfstate
+bucket-c -> states/bucket-c.tfstate
 ```
 
 Each request gets an isolated Terraform state file.
@@ -137,15 +137,3 @@ With isolated state:
 * Infrastructure remains predictable.
 * Multiple users can provision resources simultaneously.
 * The platform scales safely as usage grows.
-
----
-
-# Best Practice
-
-Most Internal Developer Platforms (IDPs) and self-service provisioning systems use one of the following:
-
-1. Dedicated Terraform workspaces
-2. Separate state files per resource/request
-3. Separate Terraform projects per tenant
-
-For an SQS-driven provisioning platform, maintaining a unique Terraform state file per request is typically the simplest and most scalable approach.

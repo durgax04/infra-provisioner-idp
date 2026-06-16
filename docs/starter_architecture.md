@@ -89,8 +89,8 @@ Example statuses:
 | Status      | Description                         |
 | ----------- | ----------------------------------- |
 | PENDING     | Request received                    |
-| IN_PROGRESS | Terraform execution started         |
-| PROVISIONED | Infrastructure created successfully |
+| PROCESSING  | Terraform execution started         |
+| COMPLETED   | Infrastructure created successfully |
 | FAILED      | Infrastructure provisioning failed  |
 
 ---
